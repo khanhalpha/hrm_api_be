@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.brycen.hrm.model.Department;
 import com.brycen.hrm.repository.DepartmentRepository;
-import com.hrm.sbcrudrestful.model.Tutorial;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -45,6 +45,17 @@ public class DepartmentController {
 	    }
 	}
 	
+	 @GetMapping("/departments/{id}")
+	  public ResponseEntity<Department> getDepartmentById(@PathVariable("id") Integer id) {
+	    Optional<Department> departmentData = departmentRepository.findById(id);
+
+	    if (departmentData.isPresent()) {
+	      return new ResponseEntity<>(departmentData.get(), HttpStatus.OK);
+	    } else {
+	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	  }
+	 
 	@PostMapping("/departments")
 	public ResponseEntity<?> createDepartment(@RequestBody Department department) {
 		try {
@@ -58,7 +69,7 @@ public class DepartmentController {
 	}
 	
 	@PutMapping("/departments/{id}")
-	  public ResponseEntity<Department> updateTutorial(@PathVariable("id") long id, @RequestBody Department department) {
+	  public ResponseEntity<Department> updateTutorial(@PathVariable("id") Integer id, @RequestBody Department department) {
 	    Optional<Department> departmentData = departmentRepository.findById(id);
 
 	    if (departmentData.isPresent()) {
@@ -68,6 +79,16 @@ public class DepartmentController {
 	      return new ResponseEntity<>(departmentRepository.save(_department), HttpStatus.OK);
 	    } else {
 	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	  }
+	
+	@DeleteMapping("/departments/{id}")
+	  public ResponseEntity<HttpStatus> deleteDepartment(@PathVariable("id") Integer id) {
+	    try {
+	    	departmentRepository.deleteById(id);
+	      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	    } catch (Exception e) {
+	      return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
 	    }
 	  }
 }

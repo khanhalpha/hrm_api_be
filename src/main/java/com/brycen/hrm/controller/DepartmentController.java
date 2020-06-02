@@ -58,6 +58,7 @@ public class DepartmentController {
 	 
 	@PostMapping("/departments")
 	public ResponseEntity<?> createDepartment(@RequestBody Department department) {
+
 		try {
 			Department departments = departmentRepository
 		          .save(new Department(department.getDepartmentName(), department.getDepartmentShort()));

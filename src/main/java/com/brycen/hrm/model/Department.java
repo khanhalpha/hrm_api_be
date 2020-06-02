@@ -1,10 +1,15 @@
 package com.brycen.hrm.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -26,6 +31,9 @@ public class Department {
 	@Size(max = 50)
 	@Column(name = "department_short")
 	private String departmentShort;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "department")
+	private Set<Employee> listEmployee = new HashSet<>();
 	
 	public Department() {
 

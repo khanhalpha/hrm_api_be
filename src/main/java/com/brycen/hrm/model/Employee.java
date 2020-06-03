@@ -20,10 +20,10 @@ public class Employee {
 	private long employeeId;
 	
 	@Column(name = "fullname")
-	private String fullName;	
+	private String fullname;	
 	
 	@Column(name = "birthday")
-	private Date birthDay;
+	private Date birthday;
 	
 	@Column(name = "gender")
 	private boolean gender;
@@ -36,31 +36,36 @@ public class Employee {
 
 	}
 	
-	public Employee(String fullname, Date birthDay, boolean gender, Department dep) {
-		this.fullName = fullname;
-		this.birthDay = birthDay;
+	public Employee(String fullname, Date birthday, boolean gender, Department dep) {
+		this.fullname = fullname;
+		this.birthday = birthday;
 		this.gender = gender;
 		this.department = dep;
 	}
 	
-	public String getFullName()
+	public Long getid()
 	{
-		return fullName;
+		return employeeId;
 	}
 	
-	public void setFullName(String fullName)
+	public String getFullname()
 	{
-		this.fullName = fullName;
+		return fullname;
 	}
 	
-	public Date getBirthDay()
+	public void setFullname(String fullname)
 	{
-		return birthDay;
+		this.fullname = fullname;
 	}
 	
-	public void setBirthDay(Date birthDay)
+	public Date getBirthday()
 	{
-		this.birthDay = birthDay;
+		return birthday;
+	}
+	
+	public void setBirthDay(Date birthday)
+	{
+		this.birthday = birthday;
 	}
 	
 	public boolean getGender()

@@ -1,9 +1,11 @@
 package com.brycen.hrm.payload.response;
 
 import java.util.Date;
+import java.util.List;
 
 import com.brycen.hrm.model.Department;
 import com.brycen.hrm.model.Employee;
+import com.brycen.hrm.model.EmployeeSkill;
 
 public class EmployeeReponse {
 
@@ -12,6 +14,7 @@ public class EmployeeReponse {
 	public Date birthday;
 	public boolean gender;
 	public Department department;
+	public List<EmployeeSkill> empSkill;
 	
 	public EmployeeReponse(Employee employee) {
 	    this.id = employee.getid();
@@ -19,6 +22,7 @@ public class EmployeeReponse {
 	    this.birthday = employee.getBirthday();
 	    this.gender = employee.getGender();
 	    this.department = employee.getDepartment();
+	    this.empSkill = employee.getSkills();
 	  }
 	
 	public Long getid()
@@ -41,7 +45,7 @@ public class EmployeeReponse {
 		return gender;
 	}
 	
-	public Department getDeparment()
+	public Department getDepartment()
 	{
 		return department;
 	}

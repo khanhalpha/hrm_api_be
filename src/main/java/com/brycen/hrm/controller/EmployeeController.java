@@ -1,5 +1,6 @@
 package com.brycen.hrm.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -72,7 +73,7 @@ public class EmployeeController {
 		PageRequest pageRequest = PageRequest.of(page, size);
 		Page<Employee> pageResult = employeeRepository.findAll(pageRequest);
 
-		List<EmployeeReponse> todos = pageResult.stream().map(EmployeeReponse::new).collect(Collectors.toList());
+		List<EmployeeReponse> employees = pageResult.stream().map(EmployeeReponse::new).collect(Collectors.toList());
 		try
 		{
 		    Thread.sleep(500);
@@ -81,7 +82,7 @@ public class EmployeeController {
 		{
 		    Thread.currentThread().interrupt();
 		}
-		return new PageImpl<>(todos, pageRequest, pageResult.getTotalElements());
+		return new PageImpl<>(employees, pageRequest, pageResult.getTotalElements());
 
 	}
 

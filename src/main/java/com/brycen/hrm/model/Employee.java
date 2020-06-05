@@ -1,7 +1,9 @@
 package com.brycen.hrm.model;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "employees")
@@ -28,9 +34,13 @@ public class Employee {
 	@Column(name = "gender")
 	private boolean gender;
 	
+//	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@ManyToOne
 	@JoinColumn(name = "department_id", nullable = false)
     private Department department;
+	
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	private List<EmployeeSkill> empSkills;
 	
 	public Employee() {
 
@@ -86,4 +96,16 @@ public class Employee {
 	public void setDepartment(Department department) {
 		this.department = department;
 	}
+	
+	public List<EmployeeSkill> getSkills()
+	{
+		return empSkills;
+	}
+	
+	public void setEmployeeSkill( List<EmployeeSkill> empSkills)
+	{
+		this.empSkills = empSkills;
+	}
+	
+	
 }

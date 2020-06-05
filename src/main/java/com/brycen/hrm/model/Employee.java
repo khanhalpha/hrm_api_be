@@ -34,6 +34,12 @@ public class Employee {
 	@Column(name = "gender")
 	private boolean gender;
 	
+	@Column(name = "email")
+	private String email;
+	
+	@Column(name = "phone_number")
+	private String phone;
+	
 //	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@ManyToOne
 	@JoinColumn(name = "department_id", nullable = false)

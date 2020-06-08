@@ -14,6 +14,7 @@ public class EmployeeReponse {
 	public Date birthday;
 	public boolean gender;
 	public Department department;
+	//public DepartmentReponse departmentReponse;
 	public List<EmployeeSkill> skills;
 	
 	public EmployeeReponse(Employee employee) {
@@ -21,8 +22,13 @@ public class EmployeeReponse {
 	    this.fullname = employee.getFullname();
 	    this.birthday = employee.getBirthday();
 	    this.gender = employee.getGender();
-	    this.department = employee.getDepartment();
 	    this.skills = employee.getSkills();
+//	    //departmentReponse =  DepartmentReponse(employee.getDepartment());
+//	    DepartmentReponse departmentReponse = new DepartmentReponse();
+//	    departmentReponse.setDepartmentName(employee.getDepartment().getDepartmentName());
+//	    departmentReponse.setDepartmentShort(employee.getDepartment().getDepartmentShort());
+//	    this.departmentReponse = departmentReponse;
+	    this.department = employee.getDepartment();
 	  }
 	
 	public Long getid()

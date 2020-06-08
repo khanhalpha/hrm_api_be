@@ -1,6 +1,7 @@
 package com.brycen.hrm.model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -64,6 +65,11 @@ public class Department {
 		return departmentShort;
 	}
 
+//	public Set<Employee> getEmployee()
+//	{
+//		return listEmployee;
+//	}
+	
 	@Override
 	public String toString() {
 		return "Department [Id=" + departmentId + ", Name=" + departmentName + ", Short=" + departmentShort +  "]";

@@ -35,22 +35,26 @@ public class EmployeeSkill {
 		
 	}
 	
-	public Skill getSkill()
+	public Long getEmployeeSkillID()
+	{
+		return empskillId;
+	}
+	public Skill getskill()
 	{
 		return skill;
 	}
 	
-	public void setSkill(Skill skill)
+	public void setskill(Skill skill)
 	{
 		this.skill = skill;
 	}
 	
-	public LevelSkill getLevel()
+	public LevelSkill getlevel()
 	{
 		return level;
 	}
 	
-	public void setLevel(LevelSkill level)
+	public void setlevel(LevelSkill level)
 	{
 		this.level = level;
 	}

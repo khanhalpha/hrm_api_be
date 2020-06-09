@@ -35,10 +35,18 @@ public class EmployeeSkill {
 		
 	}
 	
-	public Long getEmployeeSkillID()
+	public EmployeeSkill(Employee employee, Skill skill, LevelSkill level)
+	{
+		this.employee = employee;
+		this.skill = skill;
+		this.level = level;
+	}
+	
+	public Long getEmployeeskillid()
 	{
 		return empskillId;
 	}
+	
 	public Skill getskill()
 	{
 		return skill;

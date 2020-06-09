@@ -19,11 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.brycen.hrm.model.Department;
 import com.brycen.hrm.model.Employee;
 import com.brycen.hrm.model.EmployeeSkill;
+import com.brycen.hrm.model.LevelSkill;
+import com.brycen.hrm.model.Skill;
 import com.brycen.hrm.payload.request.EmployeeRequest;
 import com.brycen.hrm.payload.request.EmployeeSkillRequest;
+import com.brycen.hrm.payload.response.MessageResponse;
 import com.brycen.hrm.payload.response.SkillTest;
 import com.brycen.hrm.repository.EmployeeRepository;
 import com.brycen.hrm.repository.EmployeeSkillRepository;
+import com.brycen.hrm.repository.LevelRepository;
+import com.brycen.hrm.repository.SkillRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -36,37 +41,50 @@ public class EmployeeSkillController {
 	@Autowired
 	EmployeeRepository employeeRepository;
 	
-//	@PostMapping("/employees")
-//	public ResponseEntity<?> createEmployee(@RequestBody EmployeeRequest employeeRequest) {
-//
-//		try {
-//			Department department = departmentRepository.findById(employeeRequest.getDepartmentid()).get();
-//			System.out.print(department.getDepartmentName());
-//			Employee emp = new Employee(employeeRequest.getFullname(), employeeRequest.getBirthday(),
-//					employeeRequest.getGender(), department);
-//			Employee employees = employeeRepository.save(emp);
-//
-//			return new ResponseEntity<>(employees, HttpStatus.CREATED);
-//		} catch (Exception e) {
-//			return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
-//		}
-//	}
+	@Autowired
+	SkillRepository skillRepository;
+	
+	@Autowired
+	LevelRepository levelRepository;
+	
 	@RequestMapping(value = "/skill-employees/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	//@PutMapping("/skill-employees/{id}")
-	public ResponseEntity<EmployeeSkill> updateEmpSkill(@PathVariable("id") long id, @RequestBody List<SkillTest> list) {
-		for ( int i = 0; i < list.size() ; i ++ )
-		{
-			
-		}
-		Optional<EmployeeSkill> employeeData = empSkillRepository.findById(id);
-		//employeeData.get().g
+	public ResponseEntity<?> updateEmpSkill(@PathVariable("id") long id, @RequestBody List<SkillTest> list) {
+		Optional<Employee> employeeData = employeeRepository.findById(id);
 		if (employeeData.isPresent()) {
-//			EmployeeSkill _employeeSkill = employeeData.get();
-//			_employee.setFullname(employee.getFullname());
-			return new ResponseEntity<>(null, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+			empSkillRepository.deleteByEmployeeId(id);
+			for ( int i = 0; i < list.size() ; i ++ )
+			{
+//				if (list.get(i).getEmpskill() == null || list.get(i).getEmpskill() != 0 )
+//				{
+//					
+//				}
+				Skill skill = skillRepository.findById(list.get(i).getSkill()).get();
+				LevelSkill level = levelRepository.findById(list.get(i).getLevel()).get();
+				EmployeeSkill empSKill = new EmployeeSkill(employeeData.get(),skill,level);
+				empSkillRepository.save(empSKill);
+//				if (list.get(i).getEmpskill() == null || list.get(i).getEmpskill() == 0 )
+//				{
+//					Skill skill = skillRepository.findById(list.get(i).getSkill()).get();
+//					LevelSkill level = levelRepository.findById(list.get(i).getLevel()).get();
+//					EmployeeSkill empSKill = new EmployeeSkill(employeeData.get(),skill,level);
+//					empSkillRepository.save(empSKill);
+//				}
+//				else
+//				{
+//					Optional<EmployeeSkill> empSkillData = empSkillRepository.findById(list.get(i).getEmpskill());
+//					Skill skill = skillRepository.findById(list.get(i).getSkill()).get();
+//					LevelSkill level = levelRepository.findById(list.get(i).getLevel()).get();
+//					EmployeeSkill empSKill = empSkillData.get();
+//					empSKill.setskill(skill);
+//					empSKill.setlevel(level);
+//					empSkillRepository.save(empSKill);
+//				}
+			}
+			return ResponseEntity.ok(new MessageResponse("Update successfully!"));
+		}		
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	
 	}
 	
 

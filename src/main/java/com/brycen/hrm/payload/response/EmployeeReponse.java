@@ -23,11 +23,6 @@ public class EmployeeReponse {
 	    this.birthday = employee.getBirthday();
 	    this.gender = employee.getGender();
 	    this.skills = employee.getSkills();
-//	    //departmentReponse =  DepartmentReponse(employee.getDepartment());
-//	    DepartmentReponse departmentReponse = new DepartmentReponse();
-//	    departmentReponse.setDepartmentName(employee.getDepartment().getDepartmentName());
-//	    departmentReponse.setDepartmentShort(employee.getDepartment().getDepartmentShort());
-//	    this.departmentReponse = departmentReponse;
 	    this.department = employee.getDepartment();
 	  }
 	

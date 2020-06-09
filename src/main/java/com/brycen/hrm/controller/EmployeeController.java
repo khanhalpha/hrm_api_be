@@ -102,8 +102,10 @@ public class EmployeeController {
 		try {
 			Department department = departmentRepository.findById(employeeRequest.getDepartmentid()).get();
 			System.out.print(department.getDepartmentName());
-			Employee emp = new Employee(employeeRequest.getFullname(), employeeRequest.getBirthday(),
-					employeeRequest.getGender(), department);
+			Employee emp = new Employee(
+					employeeRequest.getFullname(), employeeRequest.getBirthday(),
+					employeeRequest.getGender(), employeeRequest.getEmail(),employeeRequest.getAddress(), 
+					employeeRequest.getPhone(), department);
 			Employee employees = employeeRepository.save(emp);
 
 			return new ResponseEntity<>(employees, HttpStatus.CREATED);

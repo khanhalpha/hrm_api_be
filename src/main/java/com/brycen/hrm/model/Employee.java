@@ -38,6 +38,17 @@ public class Employee {
 	@Column(name = "phone_number")
 	private String phone;
 	
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	@Column(name = "address")
+	private String address;
+	
 //	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@ManyToOne
 	@JoinColumn(name = "department_id", nullable = false)
@@ -50,13 +61,36 @@ public class Employee {
 
 	}
 	
-	public Employee(String fullname, Date birthday, boolean gender, Department dep) {
+	public Employee(String fullname, Date birthday, boolean gender, String email, String address, String phone, Department dep) {
 		this.fullname = fullname;
 		this.birthday = birthday;
 		this.gender = gender;
+		this.phone = phone;
+		this.email = email;
+		this.address = address;
 		this.department = dep;
 	}
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
 	public Long getid()
 	{
 		return employeeId;

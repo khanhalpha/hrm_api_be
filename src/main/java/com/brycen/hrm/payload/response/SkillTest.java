@@ -2,26 +2,37 @@ package com.brycen.hrm.payload.response;
 
 public class SkillTest {
 
-	private Long skill;
-	private Long level;
+	private Long empSkillid;
+	private Long skillId;
+	private Long levelId;
+	
+	public Long getEmpskill()
+	{
+		return empSkillid;
+	}
+	
+	public void setEmpskill(Long empSkillId)
+	{
+		this.empSkillid  = empSkillId;
+	}
 	
 	public Long getSkill()
 	{
-		return skill;
+		return skillId;
 	}
 	
 	public void setSkill(Long skill)
 	{
-		this.skill = skill;
+		this.skillId = skill;
 	}
 	
 	public Long getLevel()
 	{
-		return level;
+		return levelId;
 	}
 	
 	public void setLevel(Long level)
 	{
-		this.level = level;
+		this.levelId = level;
 	}
 }

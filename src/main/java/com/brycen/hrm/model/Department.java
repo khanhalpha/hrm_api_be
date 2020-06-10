@@ -33,6 +33,9 @@ public class Department {
 	@Column(name = "department_short")
 	private String departmentShort;
 	
+	@Column(name = "disable")
+	private boolean disable;
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "department")
 	private Set<Employee> listEmployee = new HashSet<>();
 	
@@ -65,6 +68,15 @@ public class Department {
 		return departmentShort;
 	}
 
+	public boolean getDisable() {
+		return disable;
+	}
+
+	public void setDisable(boolean disable) {
+		this.disable = disable;
+	}
+
+	
 //	public Set<Employee> getEmployee()
 //	{
 //		return listEmployee;

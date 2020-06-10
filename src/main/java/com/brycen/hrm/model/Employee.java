@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -37,14 +38,6 @@ public class Employee {
 	
 	@Column(name = "phone_number")
 	private String phone;
-	
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
 
 	@Column(name = "address")
 	private String address;
@@ -56,6 +49,9 @@ public class Employee {
 	
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
 	private List<EmployeeSkill> empSkills;
+	
+	@OneToOne(mappedBy = "employee")
+    private User user;
 	
 	public Employee() {
 
@@ -69,6 +65,14 @@ public class Employee {
 		this.email = email;
 		this.address = address;
 		this.department = dep;
+	}
+	
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
 	public String getEmail() {

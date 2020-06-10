@@ -27,6 +27,9 @@ public class LevelSkill {
 	@Column(name = "level_description")
 	private String levelDescription;
 	
+	@Column(name = "level_number")
+	private String levelNumber;
+
 	public LevelSkill() {
 
 	}
@@ -57,5 +60,13 @@ public class LevelSkill {
 	public String getLeveldescription()
 	{
 		return levelDescription;
+	}
+	
+	public String getLevelnumber() {
+		return levelNumber;
+	}
+
+	public void setLevelNumber(String levelNumber) {
+		this.levelNumber = levelNumber;
 	}
 }

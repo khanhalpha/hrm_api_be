@@ -53,16 +53,21 @@ public class EmployeeSkillController {
 		Optional<Employee> employeeData = employeeRepository.findById(id);
 		if (employeeData.isPresent()) {
 			empSkillRepository.deleteByEmployeeId(id);
-			for ( int i = 0; i < list.size() ; i ++ )
+			if (list.size() == 1 && list.get(0).getSkill() == 0 && list.get(0).getLevel() == 0)
 			{
-//				if (list.get(i).getEmpskill() == null || list.get(i).getEmpskill() != 0 )
-//				{
-//					
-//				}
-				Skill skill = skillRepository.findById(list.get(i).getSkill()).get();
-				LevelSkill level = levelRepository.findById(list.get(i).getLevel()).get();
-				EmployeeSkill empSKill = new EmployeeSkill(employeeData.get(),skill,level);
-				empSkillRepository.save(empSKill);
+				
+			}
+			else
+			{
+				for ( int i = 0; i < list.size() ; i ++ )
+				{
+					Skill skill = skillRepository.findById(list.get(i).getSkill()).get();
+					LevelSkill level = levelRepository.findById(list.get(i).getLevel()).get();
+					EmployeeSkill empSKill = new EmployeeSkill(employeeData.get(),skill,level);
+					empSkillRepository.save(empSKill);
+				}
+			}
+			
 //				if (list.get(i).getEmpskill() == null || list.get(i).getEmpskill() == 0 )
 //				{
 //					Skill skill = skillRepository.findById(list.get(i).getSkill()).get();
@@ -80,7 +85,6 @@ public class EmployeeSkillController {
 //					empSKill.setlevel(level);
 //					empSkillRepository.save(empSKill);
 //				}
-			}
 			return ResponseEntity.ok(new MessageResponse("Update successfully!"));
 		}		
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);

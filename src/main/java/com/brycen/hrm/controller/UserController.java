@@ -16,7 +16,7 @@ import com.brycen.hrm.repository.UserRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api")
 public class UserController {
 	@Autowired
 	UserRepository userRepository;

@@ -33,7 +33,7 @@ public class DepartmentController {
 	    try {
 	      List<Department> departments = new ArrayList<Department>();
 
-	      departmentRepository.findAll().forEach(departments::add);
+	      departmentRepository.findAllByDisable().forEach(departments::add);
 
 	      if (departments.isEmpty()) {
 	        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -84,10 +84,17 @@ public class DepartmentController {
 	  }
 	
 	@DeleteMapping("/departments/{id}")
-	  public ResponseEntity<HttpStatus> deleteDepartment(@PathVariable("id") Integer id) {
+	  public ResponseEntity<Department> deleteDepartment(@PathVariable("id") Integer id) {
 	    try {
-	    	departmentRepository.deleteById(id);
-	      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	    	//departmentRepository.deleteById(id);
+	    	Optional<Department> departmentData = departmentRepository.findById(id);
+	    	if (departmentData.isPresent()) {
+	    		Department _department = departmentData.get();
+	    		_department.setDisable(true);
+	    		 return new ResponseEntity<>(departmentRepository.save(_department), HttpStatus.OK);
+	    	}
+	    	else
+	    		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	    } catch (Exception e) {
 	      return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
 	    }

@@ -32,6 +32,9 @@ public class Skill {
 	@Column(name = "skill_description")
 	private String skillDescription;
 	
+	@Column(name = "color")
+	private String color;
+
 	@OneToMany(mappedBy = "skill", cascade = CascadeType.ALL)
 	private List<EmployeeSkill> empSkills;
 	
@@ -62,5 +65,13 @@ public class Skill {
 	
 	public String getSkilldescription() {
 		return skillDescription;
+	}
+	
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 }

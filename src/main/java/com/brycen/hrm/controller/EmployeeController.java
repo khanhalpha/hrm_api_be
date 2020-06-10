@@ -73,14 +73,14 @@ public class EmployeeController {
 		Page<Employee> pageResult = employeeRepository.findAll(pageRequest);
 
 		List<EmployeeReponse> employees = pageResult.stream().map(EmployeeReponse::new).collect(Collectors.toList());
-		try
-		{
-		    Thread.sleep(500);
-		}
-		catch(InterruptedException ex)
-		{
-		    Thread.currentThread().interrupt();
-		}
+//		try
+//		{
+//		    Thread.sleep(500);
+//		}
+//		catch(InterruptedException ex)
+//		{
+//		    Thread.currentThread().interrupt();
+//		}
 		return new PageImpl<>(employees, pageRequest, pageResult.getTotalElements());
 
 	}
@@ -101,7 +101,6 @@ public class EmployeeController {
 
 		try {
 			Department department = departmentRepository.findById(employeeRequest.getDepartmentid()).get();
-			System.out.print(department.getDepartmentName());
 			Employee emp = new Employee(
 					employeeRequest.getFullname(), employeeRequest.getBirthday(),
 					employeeRequest.getGender(), employeeRequest.getEmail(),employeeRequest.getAddress(), 
@@ -115,15 +114,19 @@ public class EmployeeController {
 	}
 
 	@PutMapping("/employees/{id}")
-	public ResponseEntity<Employee> updateTutorial(@PathVariable("id") long id, @RequestBody Employee employee) {
+	public ResponseEntity<Employee> updateEmployee(@PathVariable("id") long id, @RequestBody EmployeeRequest employeeRequest) {
 		Optional<Employee> employeeData = employeeRepository.findById(id);
 
 		if (employeeData.isPresent()) {
+			Department department = departmentRepository.findById(employeeRequest.getDepartmentid()).get();
 			Employee _employee = employeeData.get();
-			_employee.setFullname(employee.getFullname());
-			_employee.setBirthDay(employee.getBirthday());
-			_employee.setGender(employee.getGender());
-			_employee.setDepartment(employee.getDepartment());
+			_employee.setFullname(employeeRequest.getFullname());
+			_employee.setBirthDay(employeeRequest.getBirthday());
+			_employee.setGender(employeeRequest.getGender());
+			_employee.setPhone(employeeRequest.getPhone());
+			_employee.setEmail(employeeRequest.getEmail());
+			_employee.setAddress(employeeRequest.getAddress());
+			_employee.setDepartment(department);
 			return new ResponseEntity<>(employeeRepository.save(_employee), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

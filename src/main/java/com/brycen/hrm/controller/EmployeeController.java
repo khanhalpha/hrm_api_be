@@ -1,5 +1,6 @@
 package com.brycen.hrm.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,19 +40,19 @@ public class EmployeeController {
 	@Autowired
 	DepartmentRepository departmentRepository;
 
-//	@GetMapping("/employees")
-//	public ResponseEntity<List<Employee>> getAll() {
-//		try {
-//			List<Employee> employees = new ArrayList<Employee>();
-//			employeeRepository.findAll().forEach(employees::add);
-//			if (employees.isEmpty()) {
-//				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//			}
-//			return new ResponseEntity<>(employees, HttpStatus.OK);
-//		} catch (Exception e) {
-//			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//	}
+	@GetMapping("/employees/getall")
+	public ResponseEntity<List<Employee>> getAll() {
+		try {
+			List<Employee> employees = new ArrayList<Employee>();
+			employeeRepository.findAll().forEach(employees::add);
+			if (employees.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<>(employees, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 //	@GetMapping("/employees")
 //	public ResponseEntity<List<Employee>> getAll(@RequestParam(name = "page", defaultValue = "0") int page,

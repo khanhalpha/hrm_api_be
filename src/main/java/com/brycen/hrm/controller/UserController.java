@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.brycen.hrm.model.Skill;
 import com.brycen.hrm.model.User;
 import com.brycen.hrm.repository.UserRepository;
 

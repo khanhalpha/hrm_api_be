@@ -58,7 +58,7 @@ public class AuthController {
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwt = jwtUtils.generateJwtToken(authentication);
+		String jwt = jwtUtils.generateJwtToken(authentication, loginRequest.getSecretkey());
 		
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
 		List<String> roles = userDetails.getAuthorities().stream()
@@ -107,12 +107,24 @@ public class AuthController {
 					roles.add(adminRole);
 
 					break;
-				case "mod":
-					Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+				case "manager":
+					Role managerRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(modRole);
+					roles.add(managerRole);
 
 					break;
+//				case "department":
+//					Role departmentRole = roleRepository.findByName(ERole.DEPARTMENT)
+//							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+//					roles.add(departmentRole);
+//
+//					break;
+//				case "projectlead":
+//					Role pLRole = roleRepository.findByName(ERole.PROJECTLEAD)
+//							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+//					roles.add(pLRole);
+//
+//					break;
 				default:
 					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));

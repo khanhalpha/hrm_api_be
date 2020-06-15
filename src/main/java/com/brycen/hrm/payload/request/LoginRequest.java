@@ -8,6 +8,9 @@ public class LoginRequest {
 
 	@NotBlank
 	private String password;
+	
+	@NotBlank
+	private String secretkey;
 
 	public String getUsername() {
 		return username;
@@ -23,5 +26,13 @@ public class LoginRequest {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getSecretkey() {
+		return secretkey;
+	}
+
+	public void setSecretkey(String secretkey) {
+		this.secretkey = secretkey;
 	}
 }

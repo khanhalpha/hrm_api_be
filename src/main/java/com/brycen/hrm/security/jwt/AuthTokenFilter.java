@@ -1,6 +1,7 @@
 package com.brycen.hrm.security.jwt;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -19,6 +20,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.brycen.hrm.security.services.UserDetailsServiceImpl;
 
+import io.jsonwebtoken.Claims;
+
 public class AuthTokenFilter extends OncePerRequestFilter {
 	@Autowired
 	private JwtUtils jwtUtils;
@@ -34,8 +37,13 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 		try {
 			String jwt = parseJwt(request);
 			if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+				Claims claims = jwtUtils.getClaimsToken(jwt);
 				String username = jwtUtils.getUserNameFromJwtToken(jwt);
-
+				List<String> roles = (List<String>) claims.get("Roles");
+				for(int i =0; i < roles.size() ; i++)
+				{
+					System.out.println(roles.get(i));
+				}
 				UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());

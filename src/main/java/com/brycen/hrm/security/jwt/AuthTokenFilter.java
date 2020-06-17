@@ -39,9 +39,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 Claims claims = jwtUtils.getClaimsToken(jwt);
                 String username = jwtUtils.getUserNameFromJwtToken(jwt);
                 List<String> roles = (List<String>) claims.get("Roles");
-                for (int i = 0; i < roles.size(); i++) {
-                    System.out.println(roles.get(i));
-                }
+//                for (int i = 0; i < roles.size(); i++) {
+//                    System.out.println(roles.get(i));
+//                }
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

@@ -16,12 +16,12 @@ import com.brycen.hrm.repository.RoleRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api")
 public class RoleController {
 	@Autowired
 	RoleRepository roleRepository;
 	
-	@GetMapping("/rolers")
+	@GetMapping("/roles")
 	public ResponseEntity<List<Role>> getAllTutorials() {
 	    try {
 	      List<Role> roles = new ArrayList<Role>();

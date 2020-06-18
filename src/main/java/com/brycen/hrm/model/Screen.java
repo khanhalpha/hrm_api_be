@@ -36,9 +36,9 @@ public class Screen {
     private List<RoleScreen> roleScreens;
 
     
-    public List<RoleScreen> getRoleScreens() {
-        return roleScreens;
-    }
+//    public List<RoleScreen> getRoleScreens() {
+//        return roleScreens;
+//    }
 
     public void setRoleScreens(List<RoleScreen> roleScreens) {
         this.roleScreens = roleScreens;

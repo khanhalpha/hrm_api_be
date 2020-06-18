@@ -76,18 +76,18 @@ public class JwtHelperController {
                 Claims claims = jwtUtils.getClaimsToken(jwt);
                 rolesUser = (List<String>) claims.get("Roles");
                 Optional<Screen> screenData = screenRepository.findByscreenURL(url);
-                List<RoleScreen> roleScreen = screenData.get().getRoleScreens();
-                for(int iRoleScr = 0 ; iRoleScr < roleScreen.size(); iRoleScr ++)
-                {
-                    for(int iRoleUser = 0; iRoleUser < rolesUser.size(); iRoleUser ++)
-                    {
-                        String roleName =  roleScreen.get(iRoleScr).getRole().getName() + "";
-                        System.out.println(rolesUser.get(iRoleUser));
-                        System.out.println(roleName);
-                        if(roleName.equals(rolesUser.get(iRoleUser)))
-                            return true;
-                    }
-                }
+//                List<RoleScreen> roleScreen = screenData.get().getRoleScreens();
+//                for(int iRoleScr = 0 ; iRoleScr < roleScreen.size(); iRoleScr ++)
+//                {
+//                    for(int iRoleUser = 0; iRoleUser < rolesUser.size(); iRoleUser ++)
+//                    {
+//                        String roleName =  roleScreen.get(iRoleScr).getRole().getName() + "";
+//                        System.out.println(rolesUser.get(iRoleUser));
+//                        System.out.println(roleName);
+//                        if(roleName.equals(rolesUser.get(iRoleUser)))
+//                            return true;
+//                    }
+//                }
                 return false;
             }
             else

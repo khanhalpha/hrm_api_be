@@ -73,7 +73,7 @@ public class EmployeeTestController {
         if (!fullname.equals("") || skillId != 0 || departmentId != 0)
             sqlQuery.append("WHERE ");
         if (!fullname.equals("")) {
-            sqlQuery.append("e.fullname like '%" + fullname + "' " + System.lineSeparator());
+            sqlQuery.append("e.fullname like '%" + fullname + "%' " + System.lineSeparator());
             flag = true;
         }
         if (skillId != 0) {

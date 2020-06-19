@@ -88,11 +88,13 @@ public class JwtHelperController {
 //                            return true;
 //                    }
 //                }
-                return false;
-            }
-            else
-                return false;
-        }
-        
+//                return false;
+//            }
+//            else
+//                return false;
+                return true;
+        }       
+    }
+        return true;
     }
 }

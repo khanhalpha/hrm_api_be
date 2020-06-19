@@ -26,9 +26,13 @@ public class RoleScreenAction {
     @JoinColumn(name = "rolescreen_id")
     private RoleScreen roleScreen;
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "roleScreenAction")
-    private List<ActionRoleScreenAction> listAction;
-    
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "roleScreenAction")
+//    private List<ActionRoleScreenAction> listAction;   
+
+    @ManyToOne 
+    @JoinColumn(name = "action_id")
+    private Action action;      
+
     @Column(name = "access", columnDefinition = "boolean default false")
     private boolean access ;  
     
@@ -40,13 +44,6 @@ public class RoleScreenAction {
         this.roleScreenActionId = roleScreenActionId;
     }
 
-    public List<ActionRoleScreenAction> getListAction() {
-        return listAction;
-    }
-
-    public void setListAction(List<ActionRoleScreenAction> listAction) {
-        this.listAction = listAction;
-    }
 
     public boolean isAccess() {
         return access;
@@ -56,4 +53,11 @@ public class RoleScreenAction {
         this.access = access;
     }
 
+    public Action getAction() {
+        return action;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
+    }
 }

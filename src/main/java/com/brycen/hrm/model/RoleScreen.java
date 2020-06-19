@@ -26,7 +26,7 @@ public class RoleScreen {
     @ManyToOne 
     @JoinColumn(name = "role_id")
     private Role role;  
-// 
+ 
     @ManyToOne 
     @JoinColumn(name = "screen_id")
     private Screen screen;
@@ -48,9 +48,9 @@ public class RoleScreen {
         this.screen = screen;
     }
     
-//    public long getRolescreenId() {
-//        return rolescreenId;
-//    }
+    public long getRolescreenId() {
+        return rolescreenId;
+    }
     public void setRolescreenId(long rolescreenId) {
         this.rolescreenId = rolescreenId;
     }

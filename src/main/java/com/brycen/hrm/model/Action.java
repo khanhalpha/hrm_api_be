@@ -28,9 +28,20 @@ public class Action {
     @Column(name = "action_code")
     private String actionCode;
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "action")
-    private List<ActionRoleScreenAction> listAction;
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "action")
+//    private List<ActionRoleScreenAction> listAction;
     
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "action")
+    private List<RoleScreenAction> action;
+    
+//    public List<RoleScreenAction> getAction() {
+//        return action;
+//    }
+
+    public void setAction(List<RoleScreenAction> action) {
+        this.action = action;
+    }
+
     public Integer getActionId() {
         return actionId;
     }

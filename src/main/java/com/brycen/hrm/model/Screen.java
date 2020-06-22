@@ -27,14 +27,16 @@ public class Screen {
     @Column(name = "screen_url")
     private String screenURL;
     
-    public Long getId() {
-        return screenId;
-    }
+    private String icon;
     
 
     @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL)
     private List<RoleScreen> roleScreens;
 
+    public Long getId() {
+        return screenId;
+    }
+    
     
 //    public List<RoleScreen> getRoleScreens() {
 //        return roleScreens;
@@ -63,4 +65,13 @@ public class Screen {
     public void setScreenURL(String screenURL) {
         this.screenURL = screenURL;
     }
+    
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
 }

@@ -46,13 +46,13 @@ public class ScreenController {
 //      }
 //    }
     
-    @GetMapping("/screens/{id}")
+    @GetMapping("/rolescreensdetail/{id}")
     public List<ScreenRepository> getScrrenById(@PathVariable("id") Long id) {
       StringBuilder sqlQuery = new StringBuilder();
-      sqlQuery.append("SELECT rs.rolescreen_id, rs.role_id, rs.screen_id, rs.access, s.screen_name, s.screen_url" + System.lineSeparator());
+      sqlQuery.append("SELECT rs.rolescreen_id, rs.role_id, r.name, rs.screen_id, rs.access, s.screen_name, s.screen_url" + System.lineSeparator());
       sqlQuery.append("FROM hrm_test.role_screen rs" + System.lineSeparator());
-      sqlQuery.append("left join hrm_test.screens s" + System.lineSeparator());
-      sqlQuery.append("ON rs.screen_id = s.screen_id" + System.lineSeparator());
+      sqlQuery.append("left join hrm_test.screens s ON rs.screen_id = s.screen_id" + System.lineSeparator());
+      sqlQuery.append("join hrm_test.roles r ON rs.role_id = r.id" + System.lineSeparator());
       sqlQuery.append("where rs.screen_id = " + id + System.lineSeparator());
       sqlQuery.append("order by rs.role_id" + System.lineSeparator());
       Query q = em.createNativeQuery(sqlQuery.toString());

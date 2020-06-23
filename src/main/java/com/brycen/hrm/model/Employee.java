@@ -42,6 +42,15 @@ public class Employee {
 	@Column(name = "address")
 	private String address;
 	
+	@Column(name = "position")
+    private String position;
+	
+	@Column(name = "image")
+    private String image;
+	
+	@Column(name = "id_card")
+    private String id_card;
+	
 //	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@ManyToOne
 	@JoinColumn(name = "department_id", nullable = false)
@@ -53,6 +62,10 @@ public class Employee {
 	@OneToOne(mappedBy = "employee")
     private User user;
 	
+    @OneToOne
+    @JoinColumn(name = "status_id")
+    private Status status;
+    
 	public Employee() {
 
 	}

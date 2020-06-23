@@ -24,6 +24,7 @@ import com.brycen.hrm.model.ERole;
 import com.brycen.hrm.model.Role;
 import com.brycen.hrm.model.RoleScreen;
 import com.brycen.hrm.model.Screen;
+import com.brycen.hrm.payload.response.CheckMenuReponse;
 import com.brycen.hrm.payload.response.CheckRoleReponse;
 import com.brycen.hrm.payload.response.MenuReponse;
 import com.brycen.hrm.repository.RoleScreenReposiroty;
@@ -49,6 +50,13 @@ public class JwtHelperController {
     @Autowired
     private EntityManager em;
 
+    /**
+     * [Description]:<br/>
+     * [ Remarks ]:<br/>
+     *
+     * @param request
+     * @return
+     */
     @GetMapping("/roles")
     public ResponseEntity<List<String>> getRoles(HttpServletRequest request) {
         List<String> roles;
@@ -72,6 +80,14 @@ public class JwtHelperController {
         return null;
     }
 
+    /**
+     * [Description]:<br/>
+     * [ Remarks ]:<br/>
+     *
+     * @param url
+     * @param request
+     * @return
+     */
     @GetMapping("/checkrole")
     public boolean checkRole(@RequestParam(required = false) String url, HttpServletRequest request) {
         if (url.equals(""))
@@ -83,6 +99,9 @@ public class JwtHelperController {
                 Claims claims = jwtUtils.getClaimsToken(jwt);
                 rolesUser = (List<String>) claims.get("Roles");
                 Optional<Screen> screenData = screenRepository.findByscreenURL(url);
+                if (!screenData.isPresent()) {
+                    return false;
+                }
                 Long screenId = screenData.get().getId();
                 StringBuilder sqlQuery = new StringBuilder();
                 sqlQuery.append("select r.name, rs.access FROM role_screen rs" + System.lineSeparator());
@@ -91,64 +110,75 @@ public class JwtHelperController {
 
                 List<Object[]> objList = em.createNativeQuery(sqlQuery.toString()).getResultList();
                 List<CheckRoleReponse> ooBj = objList.stream().map(CheckRoleReponse::new).collect(Collectors.toList());
-                for ( int iRoleUser = 0; iRoleUser < rolesUser.size(); iRoleUser++)
-                {
-                    String roleUser =  rolesUser.get(iRoleUser);
-                    for (int iRoleScr = 0; iRoleScr < ooBj.size(); iRoleScr++) {                         
-                         if (ooBj.get(iRoleScr).getName().equals(roleUser))
-                         {
-                             if(ooBj.get(iRoleScr).isAccess())
-                                 return true;
-                         }
+                for (int iRoleUser = 0; iRoleUser < rolesUser.size(); iRoleUser++) {
+                    String roleUser = rolesUser.get(iRoleUser);
+                    for (int iRoleScr = 0; iRoleScr < ooBj.size(); iRoleScr++) {
+                        if (ooBj.get(iRoleScr).getName().equals(roleUser)) {
+                            if (ooBj.get(iRoleScr).isAccess())
+                                return true;
+                        }
                     }
                 }
                 return false;
-
-                // List<RoleScreen> roleScreen = screenData.get().getRoleScreens();
-                // for(int iRoleScr = 0 ; iRoleScr < roleScreen.size(); iRoleScr ++)
-                // {
-                // for(int iRoleUser = 0; iRoleUser < rolesUser.size(); iRoleUser ++)
-                // {
-                // String roleName = roleScreen.get(iRoleScr).getRole().getName() + "";
-                // System.out.println(rolesUser.get(iRoleUser));
-                // System.out.println(roleName);
-                // if(roleName.equals(rolesUser.get(iRoleUser)))
-                // return true;
-                // }
-                // }
-                // return false;
-                // }
-                // else
-                // return false;
-                //return true;
             }
         }
         return true;
     }
-    
+
+    /**
+     * [Description]:<br/>
+     * [ Remarks ]:<br/>
+     *
+     * @param request
+     * @return
+     */
     @GetMapping("/checkmenu")
-    public ResponseEntity<List<Screen>> getAll(HttpServletRequest request) {
+    public ResponseEntity<List<MenuReponse>> getAll(HttpServletRequest request) {
         try {
-            List<MenuReponse> menuList ;
+            List<MenuReponse> menuList = new ArrayList<MenuReponse>();
             List<String> rolesUser;
             List<Screen> screens = screenRepository.findAll();
             String jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
                 Claims claims = jwtUtils.getClaimsToken(jwt);
                 rolesUser = (List<String>) claims.get("Roles");
-
                 StringBuilder sqlQuery = new StringBuilder();
-                sqlQuery.append("select r.name, rs.access FROM role_screen rs" + System.lineSeparator());
-                sqlQuery.append("left join roles r ON rs.role_id = r.id" + System.lineSeparator());
+                sqlQuery.append("select r.name, rs.access, s.screen_name, s.screen_url, s.icon " + System.lineSeparator());
+                sqlQuery.append("FROM hrm_test.role_screen rs" + System.lineSeparator());
+                sqlQuery.append("left join hrm_test.roles r ON rs.role_id = r.id" + System.lineSeparator());
+                sqlQuery.append("left join hrm_test.screens s on rs.screen_id = s.screen_id");
+                List<Object[]> objList = em.createNativeQuery(sqlQuery.toString()).getResultList();
+                List<CheckMenuReponse> ooBj = objList.stream().map(CheckMenuReponse::new).collect(Collectors.toList());
+                for (int iRoleUser = 0; iRoleUser < rolesUser.size(); iRoleUser++) {
+                    String roleUser = rolesUser.get(iRoleUser);
+                    for (int iRoleMenu = 0; iRoleMenu < ooBj.size(); iRoleMenu++) {
+                        if (roleUser.equals(ooBj.get(iRoleMenu).getRoleName())) {
+                            CheckMenuReponse checkMenu = ooBj.get(iRoleMenu);
+                            if (!exitsMenu(menuList, checkMenu.getScreenURL())) {
+                                MenuReponse menu = new MenuReponse(checkMenu.getScreenName(), checkMenu.getScreenURL(), checkMenu.getScreenIcon(),
+                                        !checkMenu.isAccess());
+                                menuList.add(menu);
+                            }
+                        }
+                    }
+                }
             }
-            
-          if (screens.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-          }
 
-          return new ResponseEntity<>(screens, HttpStatus.OK);
+            if (menuList == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(menuList, HttpStatus.OK);
         } catch (Exception e) {
-          return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    private boolean exitsMenu(List<MenuReponse> menuList, String URL) {
+        for (int i = 0; i < menuList.size(); i++) {
+            if (URL.equals(menuList.get(i).getScreenURL()))
+                return true;
+        }
+        return false;
+
     }
 }

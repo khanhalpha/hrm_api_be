@@ -1,5 +1,6 @@
 package com.brycen.hrm.model;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,6 +35,9 @@ public class Department {
 	
 	@Column(name = "disable")
 	private boolean disable;
+	
+	@Column(name = "create_date")
+    private Date createDate;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "department")
 	private Set<Employee> listEmployee = new HashSet<>();

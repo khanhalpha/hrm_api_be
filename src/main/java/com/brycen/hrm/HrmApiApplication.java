@@ -10,4 +10,5 @@ public class HrmApiApplication {
 		SpringApplication.run(HrmApiApplication.class, args);
 	}
 
+	
 }

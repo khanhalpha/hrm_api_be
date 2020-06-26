@@ -154,10 +154,17 @@ public class JwtHelperController {
                     for (int iRoleMenu = 0; iRoleMenu < ooBj.size(); iRoleMenu++) {
                         if (roleUser.equals(ooBj.get(iRoleMenu).getRoleName())) {
                             CheckMenuReponse checkMenu = ooBj.get(iRoleMenu);
-                            if (!exitsMenu(menuList, checkMenu.getScreenURL())) {
+                            if (!exitsMenu(menuList, checkMenu.getScreenURL())) {                                
                                 MenuReponse menu = new MenuReponse(checkMenu.getScreenName(), checkMenu.getScreenURL(), checkMenu.getScreenIcon(),
                                         !checkMenu.isAccess());
                                 menuList.add(menu);
+                            }
+                            else
+                            {
+                                if(checkMenu.isAccess())
+                                {
+                                    
+                                }
                             }
                         }
                     }
@@ -179,6 +186,14 @@ public class JwtHelperController {
                 return true;
         }
         return false;
-
     }
+    
+//    private boolean isAccess(List<MenuReponse> menuList, String URL)
+//    {
+//        for (int i = 0; i < menuList.size(); i++) {
+//            if (URL.equals(menuList.get(i).getScreenURL()))
+//                return menuList.get(i).isHide();
+//        }
+//    }
+    
 }

@@ -163,7 +163,13 @@ public class JwtHelperController {
                             {
                                 if(checkMenu.isAccess())
                                 {
-                                    
+                                    for (int i = 0; i < menuList.size(); i++) {
+                                        if (checkMenu.getScreenURL().equals(menuList.get(i).getScreenURL()))
+                                        {
+                                            menuList.get(i).setHide(!checkMenu.isAccess());
+                                            break;
+                                        }                                             
+                                    }
                                 }
                             }
                         }
@@ -187,13 +193,5 @@ public class JwtHelperController {
         }
         return false;
     }
-    
-//    private boolean isAccess(List<MenuReponse> menuList, String URL)
-//    {
-//        for (int i = 0; i < menuList.size(); i++) {
-//            if (URL.equals(menuList.get(i).getScreenURL()))
-//                return menuList.get(i).isHide();
-//        }
-//    }
     
 }

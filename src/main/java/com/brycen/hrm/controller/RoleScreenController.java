@@ -52,9 +52,6 @@ public class RoleScreenController {
     {  
         for(int i =0; i < listRoleScreen.size(); i++)
         {
-            System.out.println(listRoleScreen.get(i).getRoleid());
-            System.out.println(listRoleScreen.get(i).getScreenid());
-
             Optional<RoleScreen> roleScreenData = roleScreenRepository.findByRoleScreen(listRoleScreen.get(i).getScreenid(), listRoleScreen.get(i).getRoleid());
             if (roleScreenData.isPresent())
             {

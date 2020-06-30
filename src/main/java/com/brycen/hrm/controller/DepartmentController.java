@@ -47,6 +47,7 @@ public class DepartmentController {
 	
 	 @GetMapping("/departments/{id}")
 	  public ResponseEntity<Department> getDepartmentById(@PathVariable("id") Integer id) {
+	     
 	    Optional<Department> departmentData = departmentRepository.findById(id);
 
 	    if (departmentData.isPresent()) {
@@ -58,7 +59,7 @@ public class DepartmentController {
 	 
 	@PostMapping("/departments")
 	public ResponseEntity<?> createDepartment(@RequestBody Department department) {
-
+	    
 		try {
 			Department departments = departmentRepository
 		          .save(new Department(department.getDepartmentName(), department.getDepartmentShort()));
